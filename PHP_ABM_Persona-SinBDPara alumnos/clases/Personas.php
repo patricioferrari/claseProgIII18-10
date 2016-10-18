@@ -127,8 +127,20 @@ class Persona
 
 	public static function Insertar($persona)
 	{
-		
-	
+		 try { 
+	         	  	$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+					$consulta =$objetoAccesoDato->RetornarConsulta("insert into persona(nombre, apellido, dni, foto) VALUES (:nom,:ap,:dni,:fot)");
+					$consulta->bindValue(':nom',$persona->nombre, PDO::PARAM_STR);
+					$consulta->bindValue(':ap', $persona->apellido, PDO::PARAM_STR);
+					$consulta->bindValue(':dni', $persona->dni, PDO::PARAM_STR);
+					$consulta->bindValue(':fot', $persona->foto, PDO::PARAM_STR);
+					$consulta->execute();
+					return true;
+            } 
+        catch (PDOException $e) { 
+            print "Error!: " . $e->getMessage(); 
+            die();
+        }	
 				
 	}	
 //--------------------------------------------------------------------------------//
